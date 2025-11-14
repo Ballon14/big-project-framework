@@ -1,7 +1,7 @@
 <x-layout>
     <x-slot:title>{{ $title }}</x-slot:title>
 
-    <div class="space-y-6">
+    <div x-data="{ openLogoutModal() { window.dispatchEvent(new CustomEvent('open-logout-modal', { detail: { formId: 'logout-form-detail' } })); } }" class="space-y-6">
         <!-- User Summary -->
         <section class="bg-white shadow-sm rounded-2xl p-6">
             <div class="flex flex-col md:flex-row md:items-center gap-6">
@@ -29,16 +29,17 @@
                         class="inline-flex justify-center items-center px-4 py-2.5 rounded-lg bg-indigo-600 text-white font-semibold shadow-sm hover:bg-indigo-700 transition">
                         Back to Dashboard
                     </a>
-                    <form method="POST" action="{{ route('logout') }}">
+                    <form method="POST" action="{{ route('logout') }}" id="logout-form-detail">
                         @csrf
-                        <button type="submit"
-                            class="inline-flex w-full justify-center items-center px-4 py-2.5 rounded-lg border bg-red-500 border-gray-300 text-white font-semibold hover:bg-red-400 transition">
+                        <button type="button" @click="openLogoutModal()"
+                            class="inline-flex w-full justify-center items-center px-4 py-2.5 rounded-lg border bg-red-600 border-gray-300 text-white font-semibold hover:bg-red-500 transition">
                             Logout
                         </button>
                     </form>
                 </div>
             </div>
         </section>
+
 
         <!-- Account Information -->
         <section class="bg-white shadow-sm rounded-2xl p-6">

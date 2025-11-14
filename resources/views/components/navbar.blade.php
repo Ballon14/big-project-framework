@@ -2,6 +2,7 @@
     <div x-data="{
         open: window.innerWidth >= 768,
         isDesktop: window.innerWidth >= 768,
+        showLogoutModal: false,
         init() {
             this.isDesktop = window.innerWidth >= 768;
             this.open = this.isDesktop;
@@ -21,6 +22,9 @@
             if (!this.isDesktop) {
                 this.open = false;
             }
+        },
+        openLogoutModal() {
+            window.dispatchEvent(new CustomEvent('open-logout-modal', { detail: { formId: 'logout-form' } }));
         }
     }" class="relative">
 
@@ -77,7 +81,8 @@
                             </svg>
                         </div>
                         <span
-                            class="hidden md:block text-xl font-bold text-gray-800 group-hover:text-indigo-600 transition-colors">SPK Sistem</span>
+                            class="hidden md:block text-xl font-bold text-gray-800 group-hover:text-indigo-600 transition-colors">SPK
+                            Sistem</span>
                     </a>
                     <!-- Close button for mobile -->
                     <button @click="close()"
@@ -148,7 +153,7 @@
                 </nav>
 
                 <!-- User Profile -->
-                <div class="mt-auto border-t border-gray-200 p-4 bg-gray-50">
+                <div class="mt-10 border-t border-gray-200 p-4 bg-gray-50">
                     @php
                         $user = Auth::user();
                         $displayName = $user?->username ?? 'User';
@@ -170,10 +175,10 @@
                             </path>
                         </svg>
                     </a>
-                    <form method="POST" action="{{ route('logout') }}">
+                    <form method="POST" action="{{ route('logout') }}" id="logout-form">
                         @csrf
-                        <button type="submit"
-                            class="w-full flex items-center justify-center gap-2 px-3 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors shadow-sm hover:shadow-md">
+                        <button type="button" @click="openLogoutModal()"
+                            class="w-full flex items-center justify-center gap-2 px-3 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors shadow-sm hover:shadow-md">
                             <i class="fas fa-sign-out-alt"></i>
                             <span>Logout</span>
                         </button>
@@ -181,5 +186,6 @@
                 </div>
             </div>
         </aside>
+
     </div>
 </div>

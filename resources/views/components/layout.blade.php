@@ -17,11 +17,14 @@
         <!-- Konten utama kanan (header + main content) -->
         <div class="flex-1 flex flex-col">
             <x-header />
-            <main class="mx-auto w-full max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
+            <main class="mx-auto w-full max-w-8xl px-4 py-12 sm:px-6 lg:px-8">
                 {{ $slot }}
             </main>
         </div>
     </div>
+
+    <!-- Global Logout Modal -->
+    <x-logout-modal formId="logout-form" />
 </body>
 
 </html>
